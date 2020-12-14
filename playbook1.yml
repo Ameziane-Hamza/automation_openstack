@@ -1,0 +1,17 @@
+---
+- name: update web servers
+  hosts: all
+
+  tasks:
+   - name: Test create a network
+     os_network:
+        auth:
+          auth_url: http://128.194.6.181/dashboard/
+          username: admin
+          password: password
+          project_name: admin
+          os_user_domain_name: Default
+          os_project_domain_name: Default
+        state: present
+        name: test_network
+        external: true

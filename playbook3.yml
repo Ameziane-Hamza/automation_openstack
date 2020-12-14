@@ -1,0 +1,17 @@
+---
+- name: update web servers
+  hosts: all
+  tasks:
+    - name: Creates a new instance and attaches to a specific network
+      os_server:
+        state: present
+        auth:
+          auth_url: http://128.194.6.181/dashboard/
+          username: admin
+          password: password
+          project_name: admin
+        name: vm1
+        image: d45b3262-6f1b-48b2-b317-fe3d1cdf7d0d
+        timeout: 200
+        flavor: 1
+        network: 3af011ea-c601-4e1b-b35a-a23f6bc32dc4
