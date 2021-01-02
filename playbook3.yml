@@ -1,17 +1,35 @@
 ---
-- name: update web servers
-  hosts: all
+- name: Create a test environment
+  hosts: 10.10.11.98
+  gather_facts: no
   tasks:
-    - name: Creates a new instance and attaches to a specific network
-      os_server:
-        state: present
+    - name: create network
+      os_network:
         auth:
-          auth_url: http://128.194.6.181/dashboard/
-          username: admin
-          password: password
-          project_name: admin
-        name: vm1
-        image: d45b3262-6f1b-48b2-b317-fe3d1cdf7d0d
-        timeout: 200
-        flavor: 1
-        network: 3af011ea-c601-4e1b-b35a-a23f6bc32dc4
+              auth_url: http://10.10.11.98:5000/v3
+              project_name: admin
+              username: admin
+              project_domain_name: Default
+              user_domain_name: Default
+              password: grt
+        state: present
+        name: test-network
+        external: false
+        wait: yes
+
+    - name: create subnet
+      os_subnet:
+        auth:
+              auth_url: http://10.10.11.98:5000/v3
+              project_name: admin
+              username: admin
+              project_domain_name: Default
+              user_domain_name: Default
+              password: grt
+        state: present
+        network_name: test-network
+        name: test-subnet
+        cidr: 192.168.1.0/24
+        dns_nameservers:
+          - 8.8.8.8
+        wait: yes
